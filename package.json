@@ -1,8 +1,9 @@
 {
   "name": "typescript-pico-node-server",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "start": "ts-node -T startup.ts"
   },
@@ -10,7 +11,8 @@
     "config.ts",
     "index.ts",
     "middleware.ts",
-    "mime-types.json"
+    "mime-types.json",
+    "pico-server.ts"
   ],
   "repository": {
     "type": "git",

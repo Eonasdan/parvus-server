@@ -1,6 +1,5 @@
-﻿import PicoServer from './index';
-import {IncomingMessage, ServerResponse} from 'http';
-import {Next} from './middleware';
+﻿import {IncomingMessage, ServerResponse} from 'http';
+import { Next, PicoServer} from './index'
 
 /**
  * DO NOT USE THIS. This is an example of how you could use the server.
