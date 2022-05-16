@@ -1,4 +1,4 @@
-import {PicoServer} from "../dist/server";
+import {ParvusServer} from "../dist/server";
 
 /**
  * This is an example of how you could use the server.
@@ -8,7 +8,7 @@ class Startup {
 
     async do() {
 
-        const pico = new PicoServer({
+        const parvusServer = new ParvusServer({
             middlewares: [
                 {
                     middleware: async (req, res, _) => {
@@ -21,22 +21,22 @@ class Startup {
             ]
         });
 
-        pico.addMiddleware(async (_, res, next) => {
+        parvusServer.addMiddleware(async (_, res, next) => {
             await this.testAsync()
             res.setHeader('authorization', 'yo');
             next()
         }, '*');
 
-        pico.addMiddleware(async (__, res, _) => {
+        parvusServer.addMiddleware(async (__, res, _) => {
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(500);
             res.end(`<html lang="en"><body><h1>Error</h1>from middleware</body></html>`);
         }, '/mw');
 
-        await pico.startAsync();
+        await parvusServer.startAsync();
 
         setTimeout(() => {
-            pico.refreshBrowser();
+            parvusServer.refreshBrowser();
         }, 5000)
     }
 

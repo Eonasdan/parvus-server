@@ -6,7 +6,7 @@ import {JSDOM} from 'jsdom';
 import {generateNext, Middleware, Stack} from './middleware';
 import Config from './config';
 
-export default class PicoServer {
+export default class ParvusServer {
     server: Server;
     mimeTypes: { type: string, name: string, extensions: string[] }[];
     io: Socket;
@@ -30,7 +30,7 @@ export default class PicoServer {
 
     // noinspection JSUnusedGlobalSymbols
     async startAsync() {
-        this.mimeTypes = await PicoServer.fetchMimetypes();
+        this.mimeTypes = await ParvusServer.fetchMimetypes();
         this.createServer();
     }
 
@@ -144,7 +144,7 @@ export default class PicoServer {
             //inject socket connection
             if (mimeType === 'text/html' && addSocket) {
                 try {
-                    let modified = PicoServer.socketInjection(file.toString());
+                    let modified = ParvusServer.socketInjection(file.toString());
                     complete(modified);
                     return;
                 } catch {

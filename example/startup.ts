@@ -1,5 +1,5 @@
 ﻿import {IncomingMessage, ServerResponse} from 'http';
-import {Next, PicoServer} from '../src'
+import {Next, ParvusServer} from '../src'
 
 /**
  * This is an example of how you could use the server.
@@ -7,7 +7,7 @@ import {Next, PicoServer} from '../src'
 class Startup {
     async do() {
 
-        const pico = new PicoServer({
+        const parvusServer = new ParvusServer({
             middlewares: [
                 {
                     middleware: async (req: IncomingMessage, res: ServerResponse, _: Next) => {
@@ -20,22 +20,22 @@ class Startup {
             ]
         });
 
-        pico.addMiddleware(async (req: IncomingMessage, res: ServerResponse, next: Next) => {
+        parvusServer.addMiddleware(async (req: IncomingMessage, res: ServerResponse, next: Next) => {
             await this.testAsync()
             res.setHeader('authorization', 'yo');
             next()
         }, '*');
 
-        pico.addMiddleware(async (req: IncomingMessage, res: ServerResponse, _: Next) => {
+        parvusServer.addMiddleware(async (req: IncomingMessage, res: ServerResponse, _: Next) => {
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(500);
             res.end(`<html lang="en"><body><h1>Error</h1>from middleware</body></html>`);
         }, '/mw');
 
-        await pico.startAsync();
+        await parvusServer.startAsync();
 
         setTimeout(() => {
-            pico.refreshBrowser();
+            parvusServer.refreshBrowser();
         }, 5000)
     }
 

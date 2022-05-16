@@ -1,4 +1,4 @@
-import PicoServer from './pico-server';
+import ParvusServer from './parvus-server';
 import { Next, Stack, Middleware } from './middleware';
 import Config from './config';
-export { PicoServer, Next, Stack, Middleware, Config };
+export { ParvusServer, Next, Stack, Middleware, Config };

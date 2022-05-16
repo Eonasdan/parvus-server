@@ -3,7 +3,7 @@ import { Server, IncomingMessage, ServerResponse } from 'http';
 import { Server as Socket } from 'socket.io';
 import { Middleware } from './middleware';
 import Config from './config';
-export default class PicoServer {
+export default class ParvusServer {
     server: Server;
     mimeTypes: {
         type: string;
