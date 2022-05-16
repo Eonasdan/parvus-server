@@ -1,7 +1,8 @@
 ﻿import {IncomingMessage, ServerResponse} from 'http';
 
 export type Stack = {
-    route: string;
+    route?: string;
+    pattern?: RegExp;
     middleware: Middleware;
 }
 
@@ -24,7 +25,8 @@ export const generateNext = () => {
     let status = false;
 
     const next: Next = () => {
-        return (status = true);
+        status = true
+        return status;
     };
 
     next.status = () => {

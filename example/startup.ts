@@ -1,23 +1,19 @@
 ﻿import {IncomingMessage, ServerResponse} from 'http';
-import { Next, PicoServer} from './index'
+import {Next, PicoServer} from '../src'
 
 /**
- * DO NOT USE THIS. This is an example of how you could use the server.
+ * This is an example of how you could use the server.
  */
 class Startup {
-    constructor() {
-        this.do().then();
-    }
-
     async do() {
 
         const pico = new PicoServer({
             middlewares: [
                 {
-                    middleware: async (req: IncomingMessage, res: ServerResponse, next: Next) => {
+                    middleware: async (req: IncomingMessage, res: ServerResponse, _: Next) => {
                         res.setHeader('Content-Type', 'text/html');
                         res.writeHead(200);
-                        res.end(`<html><body>from config</body></html>`);
+                        res.end(`<html lang="en"><body>from config. ${req.url}</body></html>`);
                     },
                     route: '/config'
                 }
@@ -25,27 +21,28 @@ class Startup {
         });
 
         pico.addMiddleware(async (req: IncomingMessage, res: ServerResponse, next: Next) => {
-            await this.t()
+            await this.testAsync()
             res.setHeader('authorization', 'yo');
             next()
         }, '*');
 
-        pico.addMiddleware(async (req: IncomingMessage, res: ServerResponse, next: Next) => {
+        pico.addMiddleware(async (req: IncomingMessage, res: ServerResponse, _: Next) => {
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(500);
-            res.end(`<html><body><h1>Error</h1>from middleware</body></html>`);
+            res.end(`<html lang="en"><body><h1>Error</h1>from middleware</body></html>`);
         }, '/mw');
 
-        await pico.start();
+        await pico.startAsync();
 
         setTimeout(() => {
             pico.refreshBrowser();
         }, 5000)
     }
 
-    async t() {
-
+    async testAsync() {
+        // do something interesting here
     }
 }
 
-new Startup();
+const s = new Startup();
+s.do().then();

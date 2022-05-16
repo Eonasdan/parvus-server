@@ -2,3 +2,4 @@
 .idea
 site/
 node_modules
+dist

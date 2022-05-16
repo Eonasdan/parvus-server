@@ -1,35 +1,41 @@
 {
-  "name": "typescript-pico-node-server",
-  "version": "1.0.2",
+  "name": "pico-server",
+  "version": "1.0.7",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/server.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "start": "ts-node -T startup.ts"
+    "build": "npm run rollup",
+    "build:declarations": "tsc --declaration --emitDeclarationOnly --outDir types",
+    "start": "node example/startup.js",
+    "rollup": "rollup -c ./rollup.config.js",
+    "release": "npm run build && npm run build:declarations && node copyToDist.js"
   },
   "files": [
-    "config.ts",
-    "index.ts",
-    "middleware.ts",
-    "mime-types.json",
-    "pico-server.ts"
+    "dist/server.js",
+    "dist/mime-types.json",
+    "types/**/*"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eonasdan/typescript-pico-node-server.git"
+    "url": "git+https://github.com/Eonasdan/pico-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Eonasdan/typescript-pico-node-server/issues"
   },
-  "homepage": "https://github.com/Eonasdan/typescript-pico-node-server#readme",
+  "homepage": "https://github.com/Eonasdan/pico-server#readme",
   "devDependencies": {
     "ts-node": "^10.5.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.3",
+    "@rollup/plugin-typescript": "^8.3.1",
+    "rollup": "^2.70.1",
+    "@types/jsdom": "^16.2.14"
   },
   "dependencies": {
-    "socket.io": "^4.4.1",
-    "jsdom": "^19.0.0"
+
+    "jsdom": "^19.0.0",
+    "socket.io": "^4.4.1"
   }
 }
