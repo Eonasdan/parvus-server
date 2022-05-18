@@ -112,7 +112,7 @@ export default class ParvusServer {
             url = url.replace(this.subfolder, '');
         }
         try {
-            const filePath = path.join(__dirname, directory, url);
+            const filePath = path.join(directory, url);
             let fileExists = await fs.stat(filePath);
 
             if (!fileExists) {
