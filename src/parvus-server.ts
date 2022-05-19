@@ -104,13 +104,15 @@ export default class ParvusServer {
     }
 
     async defaultHandler(req: IncomingMessage, res: ServerResponse, directory?: string, addSocket = true) {
-        let url = req.url;
+        let url = new URL(req.url, 'https://z').pathname;
         if (url.endsWith('/')) url += 'index.html';
+
         directory = directory || this.directory;
         if (this.subfolder) {
             directory = directory.replace(this.subfolder, '');
             url = url.replace(this.subfolder, '');
         }
+
         try {
             const filePath = path.join(directory, url);
             let fileExists = await fs.stat(filePath);
@@ -120,7 +122,7 @@ export default class ParvusServer {
                 res.setHeader('Content-Type', 'text/html');
                 res.end(`
             <html lang="en">
-              <body>
+              <body style="background-color: #1717;">
                 <h3>Page not found</h3>
               </body>
             </html>`)
@@ -156,7 +158,7 @@ export default class ParvusServer {
             console.error(ex);
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(500);
-            res.end(`<html lang="en"><body><h1>Error</h1>Failed to load requested file at ${url}</body></html>`);
+            res.end(`<html lang="en"><body style="background-color: #1717;"><h1>Error</h1>Failed to load requested file at ${url}</body></html>`);
         }
     }
 

@@ -1,4 +1,4 @@
-import {ParvusServer} from "../dist/server";
+const ParvusServer = require('../dist/server').ParvusServer;
 
 /**
  * This is an example of how you could use the server.
