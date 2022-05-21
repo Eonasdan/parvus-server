@@ -122,7 +122,7 @@ export default class ParvusServer {
                 res.setHeader('Content-Type', 'text/html');
                 res.end(`
             <html lang="en">
-              <body style="background-color: #1717;">
+              <body style="background-color: #171717;">
                 <h3>Page not found</h3>
               </body>
             </html>`)
@@ -158,7 +158,7 @@ export default class ParvusServer {
             console.error(ex);
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(500);
-            res.end(`<html lang="en"><body style="background-color: #1717;"><h1>Error</h1>Failed to load requested file at ${url}</body></html>`);
+            res.end(`<html lang="en"><body style="background-color: #171717;"><h1>Error</h1>Failed to load requested file at ${url}</body></html>`);
         }
     }
 
