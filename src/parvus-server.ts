@@ -1,5 +1,5 @@
 ﻿import {Server, IncomingMessage, ServerResponse} from 'http';
-import {promises as fs} from 'fs';
+import {promises as fs, Stats} from 'fs';
 import * as path from 'path';
 import {Server as Socket} from 'socket.io';
 import {JSDOM} from 'jsdom';
@@ -24,7 +24,7 @@ export default class ParvusServer {
             this.port = config.port || 62295;
             this.directory = config.directory || 'site';
             this.subfolder = config.subfolder;
-            config.middlewares.forEach(x => this.addMiddleware(x.middleware, x.route));
+            config.middlewares?.forEach(x => this.addMiddleware(x.middleware, x.route));
         }
     }
 
@@ -115,7 +115,12 @@ export default class ParvusServer {
 
         try {
             const filePath = path.join(directory, url);
-            let fileExists = await fs.stat(filePath);
+            let fileExists: Stats = null;
+
+            try {
+               fileExists = await fs.stat(filePath);
+            }
+            catch {}
 
             if (!fileExists) {
                 res.statusCode = 404;
