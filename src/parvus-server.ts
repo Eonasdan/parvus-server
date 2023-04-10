@@ -66,7 +66,8 @@ export default class ParvusServer {
     private createServer() {
         this.server = new Server(async (req: IncomingMessage, res: ServerResponse) => {
             const next = generateNext();
-            const matching = this.middlewares.filter(x => x.pattern.test(req.url)).map(x => x.middleware);
+            const matching = this.middlewares?.filter(x => x.pattern.test(req.url)).map(x => x.middleware);
+
             for (let middleware of matching) {
                 next.reset();
 
@@ -118,9 +119,9 @@ export default class ParvusServer {
             let fileExists: Stats = null;
 
             try {
-               fileExists = await fs.stat(filePath);
+                fileExists = await fs.stat(filePath);
+            } catch {
             }
-            catch {}
 
             if (!fileExists) {
                 res.statusCode = 404;
