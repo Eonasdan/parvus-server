@@ -18,6 +18,22 @@ class Startup {
                     },
                     route: '/config'
                 }
+            ],
+            additionalMimeTypes: [
+                {
+                    "type": "text/javascript",
+                    "name": "JavaScript",
+                    "extensions": [
+                        "mjs"
+                    ]
+                },
+                {
+                    "type": "chickenbutt",
+                    "name": "JavaScript",
+                    "extensions": [
+                        "mjs"
+                    ]
+                }
             ]
         });
 

@@ -4,11 +4,21 @@ import * as path from 'path';
 import {Server as Socket} from 'socket.io';
 import {JSDOM} from 'jsdom';
 import {generateNext, Middleware, Stack} from './middleware';
-import Config from './config';
 
-export default class ParvusServer {
+export interface MimeType { type: string, name: string, extensions: string[] }
+
+export interface Config {
+    host?: string;
+    port?: number;
+    subfolder?: string;
+    middlewares?: Stack[];
+    directory?: string;
+    additionalMimeTypes?: MimeType[];
+}
+
+export class ParvusServer {
     server: Server;
-    mimeTypes: { type: string, name: string, extensions: string[] }[];
+    mimeTypes: MimeType[];
     io: Socket;
 
     private connectedBefore = false;
@@ -25,12 +35,15 @@ export default class ParvusServer {
             this.directory = config.directory || 'site';
             this.subfolder = config.subfolder;
             config.middlewares?.forEach(x => this.addMiddleware(x.middleware, x.route));
+            this.mimeTypes = config.additionalMimeTypes || [];
         }
     }
 
     // noinspection JSUnusedGlobalSymbols
     async startAsync() {
-        this.mimeTypes = await ParvusServer.fetchMimetypes();
+        const mimeTypes = await ParvusServer.fetchMimetypes();
+
+        this.mimeTypes = this.mergedMimeTypes(mimeTypes);
         this.createServer();
     }
 
@@ -58,7 +71,17 @@ export default class ParvusServer {
         this.middlewares.push({pattern, middleware});
     }
 
-    private static async fetchMimetypes() {
+    private mergedMimeTypes(mimeTypes: MimeType[]) {
+        return mimeTypes.map(item1 => {
+            const item2 = this.mimeTypes.find(item => item.type === item1.type);
+            if (item2) {
+                return {...item1, extensions: [...item1.extensions, ...item2.extensions]}
+            }
+            return item1;
+        });
+    }
+
+    private static async fetchMimetypes() : Promise<MimeType[]> {
         const file = await fs.readFile(`${__dirname}/mime-types.json`, 'utf8');
         return JSON.parse(file as any);
     }

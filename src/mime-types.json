@@ -1828,10 +1828,10 @@
     ]
   },
   {
-    "type": "application/javascript",
+    "type": "text/javascript",
     "name": "JavaScript",
     "extensions": [
-      "js"
+      "js", "mjs", "jsx", "ejs"
     ]
   },
   {

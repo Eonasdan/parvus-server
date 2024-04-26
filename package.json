@@ -1,15 +1,15 @@
 {
   "name": "@eonasdan/parvus-server",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "",
   "main": "dist/server.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "npm run rollup",
+    "build": "npm run rollup && node copyToDist.js",
     "build:declarations": "tsc --declaration --emitDeclarationOnly --outDir types",
-    "start": "node example/startup.js",
+    "start": "npm run build && node example/startup.js",
     "rollup": "rollup -c ./rollup.config.js",
-    "release": "npm run build && npm run build:declarations && node copyToDist.js"
+    "release": "npm run build && npm run build:declarations"
   },
   "files": [
     "dist/**/*",
