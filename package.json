@@ -1,6 +1,6 @@
 {
   "name": "@eonasdan/parvus-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "dist/server.js",
   "types": "types/index.d.ts",
