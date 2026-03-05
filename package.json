@@ -33,7 +33,7 @@
     "@types/jsdom": "^16.2.14"
   },
   "dependencies": {
-    "jsdom": "^19.0.0",
+    "jsdom": "^28.1.0",
     "socket.io": "^4.4.1"
   }
 }
